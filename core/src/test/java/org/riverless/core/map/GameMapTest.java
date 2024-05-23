@@ -8,14 +8,11 @@ package org.riverless.core.map;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
-class MapTest {
+class GameMapTest {
 
     @Test
     void shouldInitializeMap() {
-        var map = new Map(10, 10);
+        var map = new GameMap(10, 10);
 
 
         Landscape[][] landscapes = new Landscape[10][10];

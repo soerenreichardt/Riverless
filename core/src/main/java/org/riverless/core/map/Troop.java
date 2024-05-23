@@ -6,5 +6,17 @@
  */
 package org.riverless.core.map;
 
+import org.riverless.core.actions.Action;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class Troop {
+
+    private final Set<Action> allowedActions;
+    private Position pos;
+
+    public Troop() {
+        this.allowedActions = new HashSet<>();
+    }
 }

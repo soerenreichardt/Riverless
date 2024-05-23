@@ -1,0 +1,13 @@
+apply plugin: 'java-library'
+
+dependencies {
+    annotationProcessor 'org.jetbrains:annotations:16.0.2'
+
+    implementation 'org.reflections:reflections:0.10.2'
+
+    compileOnly 'org.jetbrains:annotations:16.0.2'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.assertj:assertj-core:3.22.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}

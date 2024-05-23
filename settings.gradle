@@ -1,0 +1,4 @@
+rootProject.name = 'graph-data-science'
+
+include('core')
+project(':core').projectDir = file('core')

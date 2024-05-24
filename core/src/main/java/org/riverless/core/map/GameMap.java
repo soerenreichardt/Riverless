@@ -9,23 +9,23 @@ package org.riverless.core.map;
 import org.riverless.core.actions.Action;
 
 import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class GameMap {
+
+    private final BlockingQueue<Action> actionQueue;
 
     private final LandscapeLayer landscapeLayer;
     private final LocationLayer locationLayer;
     private final TroopLayer troopLayer;
 
-    private final BlockingQueue<Action> actionQueue;
     private final MapActionVisitor actionVisitor;
 
-    public GameMap(int width, int height) {
+    public GameMap(int width, int height, BlockingQueue<Action> actionQueue) {
+        this.actionQueue = actionQueue;
         this.landscapeLayer = new LandscapeLayer(width, height);
         this.locationLayer = new LocationLayer(width, height);
         this.troopLayer = new TroopLayer(Map.of());
-        this.actionQueue = new ArrayBlockingQueue<>(100);
         this.actionVisitor = new MapActionVisitor(this);
     }
 

@@ -8,12 +8,13 @@ package org.riverless.core.map;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.ArrayBlockingQueue;
+
 class GameMapTest {
 
     @Test
     void shouldInitializeMap() {
-        var map = new GameMap(10, 10);
-
+        var map = new GameMap(10, 10, new ArrayBlockingQueue<>(100));
 
         Landscape[][] landscapes = new Landscape[10][10];
         for (int i = 0; i < 10; i++) {

@@ -14,20 +14,11 @@ public class LandscapeLayer {
         landscapes = new Landscape[width][height];
     }
 
-    public void setLandscape(Landscape[][] landscapes) {
+    public void setLandscapes(Landscape[][] landscapes) {
         this.landscapes = landscapes;
     }
 
-
-    public String render() {
-        StringBuilder sb = new StringBuilder();
-        for (int y = 0; y < landscapes[0].length; y++) {
-            for (int x = 0; x < landscapes.length; x++) {
-                sb.append(landscapes[x][y].symbol);
-            }
-            sb.append("\n");
-        }
-        return sb.toString();
+    public Landscape getLandscape(int x, int y) {
+        return landscapes[x][y];
     }
-
 }

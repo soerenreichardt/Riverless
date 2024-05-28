@@ -14,6 +14,8 @@ import java.util.concurrent.BlockingQueue;
 
 public class GameMap {
 
+    private final int width;
+    private final int height;
     private final BlockingQueue<Action> actionQueue;
     private final BlockingQueue<Event> eventQueue;
 
@@ -24,12 +26,22 @@ public class GameMap {
     private final MapActionVisitor actionVisitor;
 
     public GameMap(int width, int height, BlockingQueue<Action> actionQueue, BlockingQueue<Event> eventQueue) {
+        this.width = width;
+        this.height = height;
         this.actionQueue = actionQueue;
         this.eventQueue = eventQueue;
         this.landscapeLayer = new LandscapeLayer(width, height);
         this.locationLayer = new LocationLayer(width, height);
         this.troopLayer = new TroopLayer(Map.of());
         this.actionVisitor = new MapActionVisitor(this);
+    }
+
+    public int width() {
+        return width;
+    }
+
+    public int height() {
+        return height;
     }
 
     public LandscapeLayer landscapeLayer() {

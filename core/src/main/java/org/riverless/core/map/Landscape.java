@@ -10,9 +10,13 @@ public enum Landscape {
     LAND("L"),
     WATER("W");
 
-    public final String symbol;
+    private final String symbol;
 
     Landscape(String symbol) {
         this.symbol = symbol;
+    }
+
+    public String symbol() {
+        return symbol;
     }
 }

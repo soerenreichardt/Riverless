@@ -11,6 +11,6 @@ public class LocationLayer {
     private Location[][] locations;
 
     public LocationLayer(int width, int height) {
-        this.locations = new Location[width][height];
+        this.locations = new Location[height][width];
     }
 }

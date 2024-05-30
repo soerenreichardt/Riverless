@@ -11,7 +11,7 @@ public class LandscapeLayer {
     private Landscape[][] landscapes;
 
     public LandscapeLayer(int width, int height) {
-        landscapes = new Landscape[width][height];
+        landscapes = new Landscape[height][width];
     }
 
     public void setLandscapes(Landscape[][] landscapes) {

@@ -7,16 +7,6 @@
 package org.riverless.core.map;
 
 public enum Landscape {
-    LAND("L"),
-    WATER("W");
-
-    private final String symbol;
-
-    Landscape(String symbol) {
-        this.symbol = symbol;
-    }
-
-    public String symbol() {
-        return symbol;
-    }
+    LAND,
+    WATER
 }

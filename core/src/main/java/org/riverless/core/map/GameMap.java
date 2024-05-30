@@ -6,18 +6,18 @@
  */
 package org.riverless.core.map;
 
+import org.riverless.core.GameObject;
 import org.riverless.core.actions.Action;
+import org.riverless.core.actions.ActionListener;
 import org.riverless.core.events.Event;
 
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
+import java.util.Optional;
 
-public class GameMap {
+public class GameMap extends GameObject implements ActionListener {
 
     private final int width;
     private final int height;
-    private final BlockingQueue<Action> actionQueue;
-    private final BlockingQueue<Event> eventQueue;
 
     private final LandscapeLayer landscapeLayer;
     private final LocationLayer locationLayer;
@@ -25,11 +25,9 @@ public class GameMap {
 
     private final MapActionVisitor actionVisitor;
 
-    public GameMap(int width, int height, BlockingQueue<Action> actionQueue, BlockingQueue<Event> eventQueue) {
+    public GameMap(int width, int height) {
         this.width = width;
         this.height = height;
-        this.actionQueue = actionQueue;
-        this.eventQueue = eventQueue;
         this.landscapeLayer = new LandscapeLayer(width, height);
         this.locationLayer = new LocationLayer(width, height);
         this.troopLayer = new TroopLayer(Map.of());
@@ -56,10 +54,8 @@ public class GameMap {
         return troopLayer;
     }
 
-    public void handleActions() {
-        while (!actionQueue.isEmpty()) {
-            Action action = actionQueue.poll();
-            action.visit(actionVisitor).map(eventQueue::offer);
-        }
+    @Override
+    public Optional<Event> handleAction(Action action) {
+        return action.visit(actionVisitor);
     }
 }

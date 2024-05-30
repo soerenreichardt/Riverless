@@ -1,4 +1,4 @@
-rootProject.name = 'graph-data-science'
+rootProject.name = 'riverless'
 
 include('core')
 project(':core').projectDir = file('core')

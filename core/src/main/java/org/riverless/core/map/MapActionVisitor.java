@@ -15,8 +15,6 @@ class MapActionVisitor extends ActionVisitorAdapter {
 
     @Override
     public Optional<Event> visitRunAction(MoveAction action) {
-        var troop = action.troop();
-        map.troopLayer().moveTroop(troop, action.direction(), action.distance());
-        return Optional.of(Event.TROOP_MOOVED);
+        throw new UnsupportedOperationException();
     }
 }

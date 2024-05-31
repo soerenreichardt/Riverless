@@ -7,16 +7,31 @@
 package org.riverless.core.map;
 
 import org.riverless.core.actions.Action;
+import org.riverless.core.actions.MoveAction;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Troop {
 
     private final Set<Action> allowedActions;
-    private Position pos;
 
     public Troop() {
         this.allowedActions = new HashSet<>();
+    }
+
+    public void grandMoveActionFromDirection(Direction direction) {
+        grantAction(new MoveAction(this, direction));
+    }
+
+    public Set<Action> allowedActions() {
+        return this.allowedActions;
+    }
+
+    public void grantAction(Action action) {
+        allowedActions.add(action);
+    }
+
+    public void revokeAction(Action action) {
+        allowedActions.remove(action);
     }
 }

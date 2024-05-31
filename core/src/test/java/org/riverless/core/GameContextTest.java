@@ -19,7 +19,7 @@ class GameContextTest {
         ctx.addActionListener(actionListener);
 
         var troop = mock(Troop.class);
-        ctx.processAction(new MoveAction(troop, 2, Direction.RIGHT));
-        verify(actionListener, times(1)).handleAction(eq(new MoveAction(troop, 2, Direction.RIGHT)));
+        ctx.processAction(new MoveAction(troop, Direction.RIGHT));
+        verify(actionListener, times(1)).handleAction(eq(new MoveAction(troop, Direction.RIGHT)));
     }
 }

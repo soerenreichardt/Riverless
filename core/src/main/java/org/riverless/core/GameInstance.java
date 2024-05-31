@@ -40,7 +40,7 @@ public class GameInstance extends Thread {
                     context.processAction(action);
                 }
                 var elapsed = System.currentTimeMillis() - start;
-                Thread.sleep(TARGET_FRAME_TIME_MILLIS - elapsed);
+                Thread.sleep(Math.max(TARGET_FRAME_TIME_MILLIS - elapsed, 0));
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

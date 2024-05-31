@@ -11,7 +11,6 @@ import org.riverless.core.actions.Action;
 import org.riverless.core.actions.ActionListener;
 import org.riverless.core.events.Event;
 
-import java.util.Map;
 import java.util.Optional;
 
 public class GameMap extends GameObject implements ActionListener {
@@ -30,7 +29,7 @@ public class GameMap extends GameObject implements ActionListener {
         this.height = height;
         this.landscapeLayer = new LandscapeLayer(width, height);
         this.locationLayer = new LocationLayer(width, height);
-        this.troopLayer = new TroopLayer(Map.of());
+        this.troopLayer = new TroopLayer(width, height);
         this.actionVisitor = new MapActionVisitor(this);
     }
 

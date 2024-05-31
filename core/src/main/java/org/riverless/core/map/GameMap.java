@@ -41,16 +41,12 @@ public class GameMap extends GameObject implements ActionListener {
         return height;
     }
 
-    public LandscapeLayer landscapeLayer() {
-        return landscapeLayer;
+    public void setLandscapes(Landscape[][] landscapes) {
+        this.landscapeLayer.setLandscapes(landscapes);
     }
 
-    public LocationLayer locationLayer() {
-        return locationLayer;
-    }
-
-    public TroopLayer troopLayer() {
-        return troopLayer;
+    public Landscape getLandscape(int x, int y) {
+        return landscapeLayer.getLandscape(x, y);
     }
 
     @Override

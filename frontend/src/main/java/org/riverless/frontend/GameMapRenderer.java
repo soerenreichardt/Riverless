@@ -12,11 +12,10 @@ public class GameMapRenderer {
     }
 
     public String render() {
-        var landscape = map.landscapeLayer();
         StringBuilder sb = new StringBuilder();
         for (int y = 0; y < map.height(); y++) {
             for (int x = 0; x < map.width(); x++) {
-                var renderedLandscape = renderLandscape(landscape.getLandscape(x, y));
+                var renderedLandscape = renderLandscape(map.getLandscape(x, y));
                 sb.append(renderedLandscape);
             }
             sb.append("\n");

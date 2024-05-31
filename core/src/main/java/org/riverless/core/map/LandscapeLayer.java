@@ -6,19 +6,23 @@
  */
 package org.riverless.core.map;
 
-public class LandscapeLayer {
+class LandscapeLayer {
 
     private Landscape[][] landscapes;
 
-    public LandscapeLayer(int width, int height) {
+    LandscapeLayer(int width, int height) {
         landscapes = new Landscape[height][width];
     }
 
-    public void setLandscapes(Landscape[][] landscapes) {
+    void setLandscapes(Landscape[][] landscapes) {
         this.landscapes = landscapes;
     }
 
-    public Landscape getLandscape(int x, int y) {
+    Landscape getLandscape(int x, int y) {
         return landscapes[x][y];
+    }
+
+    Landscape[][] landscapes() {
+        return landscapes;
     }
 }

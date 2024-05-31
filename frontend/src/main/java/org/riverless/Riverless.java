@@ -19,7 +19,7 @@ public class Riverless {
                 landscapes[i][j] = Math.random() < 0.3 ? Landscape.LAND : Landscape.WATER;
             }
         }
-        map.landscapeLayer().setLandscapes(landscapes);
+        map.setLandscapes(landscapes);
         System.out.println(new GameMapRenderer(map).render());
     }
 }

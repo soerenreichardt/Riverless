@@ -11,6 +11,6 @@ public interface Action {
     Optional<Event> visit(Visitor visitor);
 
     interface Visitor {
-        Optional<Event> visitRunAction(MoveAction action);
+        Optional<Event> visitMoveAction(MoveAction action);
     }
 }

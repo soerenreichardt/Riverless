@@ -6,8 +6,7 @@ import java.util.Optional;
 
 public abstract class ActionVisitorAdapter implements Action.Visitor {
     @Override
-    public Optional<Event> visitRunAction(MoveAction moveAction) {
+    public Optional<Event> visitMoveAction(MoveAction moveAction) {
         return Optional.empty();
     }
-
 }

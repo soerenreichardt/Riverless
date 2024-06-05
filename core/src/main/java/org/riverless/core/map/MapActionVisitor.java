@@ -14,7 +14,7 @@ class MapActionVisitor extends ActionVisitorAdapter {
     }
 
     @Override
-    public Optional<Event> visitRunAction(MoveAction action) {
+    public Optional<Event> visitMoveAction(MoveAction action) {
         throw new UnsupportedOperationException();
     }
 }

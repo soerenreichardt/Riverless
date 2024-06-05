@@ -10,6 +10,6 @@ public record MoveAction(Troop troop, Direction direction) implements Action {
 
     @Override
     public Optional<Event> visit(Visitor visitor) {
-        return visitor.visitRunAction(this);
+        return visitor.visitMoveAction(this);
     }
 }

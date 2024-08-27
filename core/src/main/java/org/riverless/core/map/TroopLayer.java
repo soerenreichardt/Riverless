@@ -6,6 +6,7 @@
  */
 package org.riverless.core.map;
 
+import org.riverless.core.actions.MeleeAttackAction;
 import org.riverless.core.actions.MoveAction;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class TroopLayer {
             return false;
         }
         troopPositions[position.y()][position.x()] = troop;
-        updateAllowedTroopMoveActions(troop, position);
+        updateAllowedActions(troop, position);
         return true;
     }
 
@@ -50,7 +51,7 @@ public class TroopLayer {
                 troopPositions[position.y()][position.x()] = null;
                 position.move(direction, 1);
                 troopPositions[position.y()][position.x()] = troop;
-                updateAllowedTroopMoveActions(troop, position);
+                updateAllowedActions(troop, position);
             }
         });
     }
@@ -59,16 +60,27 @@ public class TroopLayer {
      * Update the current troop's allowed move actions based on the current position.
      * Also checks all adjacent positions and updates the allowed move actions for the adjacent troops.
      */
-    private void updateAllowedTroopMoveActions(Troop troop, Position position) {
-        calculatePossibleAdjacentDirections(position).forEach(adjacentDirection -> {
+    private void updateAllowedActions(Troop troop, Position position) {
+        for (Direction adjacentDirection : calculatePossibleAdjacentDirections(position)) {
             var adjacentPosition = Position.adjacent(position, adjacentDirection);
+            var adjacentTroop = troopAtPosition(adjacentPosition);
             if (positionIsEmpty(adjacentPosition)) {
-                troop.grandMoveActionFromDirection(adjacentDirection);
-            } else {
-                Troop adjacentTroop = troopAtPosition(adjacentPosition);
+                // movement
+                troop.grantMoveActionFromDirection(adjacentDirection);
+
+                // attack
+                troop.revokeAction(new MeleeAttackAction(troop, adjacentTroop));
+            } else { // On the adjacent position there is another troop
+                // movement
                 adjacentTroop.revokeAction(new MoveAction(adjacentTroop, adjacentDirection.opposite()));
+
+                // attack
+                if (troop.team() != adjacentTroop.team()) {
+                    troop.grantAction(new MeleeAttackAction(troop, adjacentTroop));
+                    adjacentTroop.grantAction(new MeleeAttackAction(adjacentTroop, troop));
+                }
             }
-        });
+        }
     }
 
     private boolean positionIsEmpty(Position position) {

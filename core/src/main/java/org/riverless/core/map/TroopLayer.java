@@ -6,8 +6,10 @@
  */
 package org.riverless.core.map;
 
+import org.riverless.core.GameContext;
 import org.riverless.core.actions.MeleeAttackAction;
 import org.riverless.core.actions.MoveAction;
+import org.riverless.core.troops.Troop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,6 @@ public class TroopLayer {
             return false;
         }
         troopPositions[position.y()][position.x()] = troop;
-        updateAllowedActions(troop, position);
         return true;
     }
 
@@ -51,39 +52,24 @@ public class TroopLayer {
                 troopPositions[position.y()][position.x()] = null;
                 position.move(direction, 1);
                 troopPositions[position.y()][position.x()] = troop;
-                updateAllowedActions(troop, position);
             }
         });
     }
 
-    /**
-     * Update the current troop's allowed move actions based on the current position.
-     * Also checks all adjacent positions and updates the allowed move actions for the adjacent troops.
-     */
-    private void updateAllowedActions(Troop troop, Position position) {
-        for (Direction adjacentDirection : calculatePossibleAdjacentDirections(position)) {
-            var adjacentPosition = Position.adjacent(position, adjacentDirection);
-            var adjacentTroop = troopAtPosition(adjacentPosition);
-            if (positionIsEmpty(adjacentPosition)) {
-                // movement
-                troop.grantMoveActionFromDirection(adjacentDirection);
-
-                // attack
-                troop.revokeAction(new MeleeAttackAction(troop, adjacentTroop));
-            } else { // On the adjacent position there is another troop
-                // movement
-                adjacentTroop.revokeAction(new MoveAction(adjacentTroop, adjacentDirection.opposite()));
-
-                // attack
-                if (troop.team() != adjacentTroop.team()) {
-                    troop.grantAction(new MeleeAttackAction(troop, adjacentTroop));
-                    adjacentTroop.grantAction(new MeleeAttackAction(adjacentTroop, troop));
+    public void updateTroopActions(GameContext ctx) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                var troop = troopAtPosition(new Position(x, y));
+                if (troop != null) {
+                    troop.allowedActions().clear();
+                    var actions = troop.abilities().stream().flatMap(ability -> ability.computePossibleActions(troop, ctx).stream()).toList();
+                    troop.allowedActions().addAll(actions);
                 }
             }
         }
     }
 
-    private boolean positionIsEmpty(Position position) {
+    public boolean positionIsEmpty(Position position) {
         return positionIsEmpty(position.x(), position.y());
     }
 
@@ -91,11 +77,11 @@ public class TroopLayer {
         return troopPositions[y][x] == null;
     }
 
-    private Troop troopAtPosition(Position position) {
+    public Troop troopAtPosition(Position position) {
         return troopPositions[position.y()][position.x()];
     }
 
-        private List<Direction> calculatePossibleAdjacentDirections(Position position) {
+    public List<Direction> calculatePossibleAdjacentDirections(Position position) {
         var possibleDirections = new ArrayList<>(List.of(Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN));
 
         if (position.x() == 0) {

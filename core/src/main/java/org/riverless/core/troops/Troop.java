@@ -4,23 +4,27 @@
  * This file contains proprietary code that is only available via a commercial license from Neo4j.
  * For more information, see https://neo4j.com/contact-us/
  */
-package org.riverless.core.map;
+package org.riverless.core.troops;
 
 import org.jetbrains.annotations.TestOnly;
+import org.riverless.core.troops.abilities.Ability;
 import org.riverless.core.actions.Action;
 import org.riverless.core.actions.MoveAction;
+import org.riverless.core.map.Direction;
 import org.riverless.core.player.Team;
+import org.riverless.core.troops.stats.Stats;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Troop {
 
     private final Set<Action> allowedActions;
     private final Team team;
-    private final int maxHealth;
-    private int health;
-    private int damage;
+    private final List<Ability> abilities;
+    private final Stats stats;
 
     @TestOnly
     public Troop() {
@@ -28,9 +32,10 @@ public class Troop {
     }
 
     public Troop(Team team, int maxHealth) {
-        this.maxHealth = maxHealth;
+        this.stats = new Stats(maxHealth);
         this.team = team;
         this.allowedActions = new HashSet<>();
+        this.abilities = new ArrayList<>();
     }
 
     public void grantMoveActionFromDirection(Direction direction) {
@@ -50,18 +55,26 @@ public class Troop {
     }
 
     public int health() {
-        return health;
+        return stats.health();
+    }
+
+    public boolean isMoveable() {
+        return stats.isMoveable();
     }
 
     public int damage() {
-        return damage;
+        return stats.damage();
     }
 
     public void receiveDamage(int damage) {
-        health -= damage;
+        stats.setHealth(stats.health()-damage);
     }
 
     public Team team() {
         return team;
+    }
+
+    public List<Ability> abilities() {
+        return abilities;
     }
 }

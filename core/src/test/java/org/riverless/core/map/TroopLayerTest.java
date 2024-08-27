@@ -2,6 +2,7 @@ package org.riverless.core.map;
 
 import org.junit.jupiter.api.Test;
 import org.riverless.core.actions.MoveAction;
+import org.riverless.core.troops.Troop;
 
 import java.util.Optional;
 

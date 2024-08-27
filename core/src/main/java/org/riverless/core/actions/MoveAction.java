@@ -1,12 +1,9 @@
 package org.riverless.core.actions;
 
 import org.riverless.core.GameContext;
-import org.riverless.core.events.Event;
 import org.riverless.core.map.Direction;
 import org.riverless.core.map.GameMap;
-import org.riverless.core.map.Troop;
-
-import java.util.Optional;
+import org.riverless.core.troops.Troop;
 
 public record MoveAction(Troop troop, Direction direction) implements Action {
 

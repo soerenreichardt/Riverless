@@ -1,6 +1,7 @@
 package org.riverless.core;
 
 import org.riverless.core.actions.Action;
+import org.riverless.core.map.GameMap;
 
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -25,12 +26,14 @@ public class GameInstance extends Thread {
     @Override
     public void run() {
         try {
+            var map = context.getResource(GameMap.class);
             while (true) {
                 var start = System.currentTimeMillis();
                 while (!actionQueue.isEmpty()) {
                     Action action = actionQueue.poll();
                     action.execute(context);
                 }
+                map.troopLayer().updateTroopActions(context);
                 var elapsed = System.currentTimeMillis() - start;
                 Thread.sleep(Math.max(TARGET_FRAME_TIME_MILLIS - elapsed, 0));
             }

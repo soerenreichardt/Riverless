@@ -9,7 +9,8 @@ package org.riverless.core.map;
 import org.riverless.core.actions.Action;
 import org.riverless.core.actions.MoveAction;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Troop {
 

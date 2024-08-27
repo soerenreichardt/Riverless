@@ -7,13 +7,9 @@
 package org.riverless.core.map;
 
 import org.riverless.core.GameObject;
-import org.riverless.core.actions.Action;
-import org.riverless.core.actions.ActionListener;
-import org.riverless.core.events.Event;
+import org.riverless.core.Resource;
 
-import java.util.Optional;
-
-public class GameMap extends GameObject implements ActionListener {
+public class GameMap extends GameObject implements Resource {
 
     private final int width;
     private final int height;
@@ -22,15 +18,12 @@ public class GameMap extends GameObject implements ActionListener {
     private final LocationLayer locationLayer;
     private final TroopLayer troopLayer;
 
-    private final MapActionVisitor actionVisitor;
-
     public GameMap(int width, int height) {
         this.width = width;
         this.height = height;
         this.landscapeLayer = new LandscapeLayer(width, height);
         this.locationLayer = new LocationLayer(width, height);
         this.troopLayer = new TroopLayer(width, height);
-        this.actionVisitor = new MapActionVisitor(this);
     }
 
     public int width() {
@@ -49,8 +42,7 @@ public class GameMap extends GameObject implements ActionListener {
         return landscapeLayer.getLandscape(x, y);
     }
 
-    @Override
-    public Optional<Event> handleAction(Action action) {
-        return action.visit(actionVisitor);
+    public TroopLayer troopLayer() {
+        return troopLayer;
     }
 }

@@ -1,7 +1,5 @@
 package org.riverless.core;
 
-import org.riverless.core.actions.Action;
-
 public abstract class GameObject {
     private GameContext context;
     private boolean initialized = false;
@@ -11,8 +9,7 @@ public abstract class GameObject {
         this.initialized = true;
     }
 
-    void performAction(Action action) {
-        assert initialized : "GameObject not initialized";
-        context.publishAction(action);
+    protected GameContext context() {
+        return context;
     }
 }

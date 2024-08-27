@@ -29,15 +29,7 @@ public class TroopLayer {
             return false;
         }
         troopPositions[position.y()][position.x()] = troop;
-        calculatePossibleAdjacentDirections(position).forEach(adjacentDirection -> {
-            var adjacentPosition = Position.adjacent(position, adjacentDirection);
-            if (positionIsEmpty(adjacentPosition)) {
-                troop.grandMoveActionFromDirection(adjacentDirection);
-            } else {
-                Troop adjacentTroop = troopAtPosition(adjacentPosition);
-                adjacentTroop.revokeAction(new MoveAction(adjacentTroop, adjacentDirection.opposite()));
-            }
-        });
+        updateAllowedTroopMoveActions(troop, position);
         return true;
     }
 
@@ -52,6 +44,33 @@ public class TroopLayer {
         return Optional.empty();
     }
 
+    public void moveTroop(Troop troop, Direction direction) {
+        troopPosition(troop).ifPresent(position -> {
+            if (positionIsEmpty(Position.adjacent(position, direction))) {
+                troopPositions[position.y()][position.x()] = null;
+                position.move(direction, 1);
+                troopPositions[position.y()][position.x()] = troop;
+                updateAllowedTroopMoveActions(troop, position);
+            }
+        });
+    }
+
+    /**
+     * Update the current troop's allowed move actions based on the current position.
+     * Also checks all adjacent positions and updates the allowed move actions for the adjacent troops.
+     */
+    private void updateAllowedTroopMoveActions(Troop troop, Position position) {
+        calculatePossibleAdjacentDirections(position).forEach(adjacentDirection -> {
+            var adjacentPosition = Position.adjacent(position, adjacentDirection);
+            if (positionIsEmpty(adjacentPosition)) {
+                troop.grandMoveActionFromDirection(adjacentDirection);
+            } else {
+                Troop adjacentTroop = troopAtPosition(adjacentPosition);
+                adjacentTroop.revokeAction(new MoveAction(adjacentTroop, adjacentDirection.opposite()));
+            }
+        });
+    }
+
     private boolean positionIsEmpty(Position position) {
         return positionIsEmpty(position.x(), position.y());
     }
@@ -64,7 +83,7 @@ public class TroopLayer {
         return troopPositions[position.y()][position.x()];
     }
 
-    private List<Direction> calculatePossibleAdjacentDirections(Position position) {
+        private List<Direction> calculatePossibleAdjacentDirections(Position position) {
         var possibleDirections = new ArrayList<>(List.of(Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN));
 
         if (position.x() == 0) {

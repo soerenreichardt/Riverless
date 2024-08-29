@@ -7,21 +7,21 @@
 package org.riverless.core.troops;
 
 import org.jetbrains.annotations.TestOnly;
+import org.riverless.core.GameContext;
 import org.riverless.core.actions.Action;
 import org.riverless.core.player.Team;
+import org.riverless.core.troops.abilities.Abilities;
 import org.riverless.core.troops.abilities.Ability;
 import org.riverless.core.troops.stats.Stats;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Troop {
 
     private final Set<Action> allowedActions;
     private final Team team;
-    private final List<Ability> abilities;
+    private final Abilities abilities;
     private final Stats stats;
 
     @TestOnly
@@ -33,7 +33,7 @@ public class Troop {
         this.stats = new Stats(maxHealth, true);
         this.team = team;
         this.allowedActions = new HashSet<>();
-        this.abilities = new ArrayList<>();
+        this.abilities = new Abilities();
     }
 
     public Set<Action> allowedActions() {
@@ -64,11 +64,12 @@ public class Troop {
         return team;
     }
 
-    public List<Ability> abilities() {
-        return abilities;
+    public void updatePossibleActions(GameContext ctx) {
+        allowedActions.clear();
+        abilities.computePossibleActions(this, ctx).forEach(allowedActions::add);
     }
 
     public void addAbility(Ability ability) {
-        abilities.add(ability);
+        abilities.addAbility(ability);
     }
 }

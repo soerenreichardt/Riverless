@@ -13,6 +13,11 @@ import java.util.List;
 public record RangedAttackAbility(int range) implements Ability {
 
     @Override
+    public AbilityType type() {
+        return AbilityType.RANGED_ATTACK;
+    }
+
+    @Override
     public List<Action> computePossibleActions(Troop troop, GameContext ctx) {
         List<Action> actions = new ArrayList<>();
         var troopLayer = ctx.getResource(GameMap.class).troopLayer();

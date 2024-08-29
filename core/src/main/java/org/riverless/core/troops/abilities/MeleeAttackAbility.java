@@ -14,6 +14,11 @@ import java.util.List;
 public record MeleeAttackAbility() implements Ability {
 
     @Override
+    public AbilityType type() {
+        return AbilityType.MELEE_ATTACK;
+    }
+
+    @Override
     public List<Action> computePossibleActions(Troop troop, GameContext ctx) {
         List<Action> actions = new ArrayList<>();
         var troopLayer = ctx.getResource(GameMap.class).troopLayer();

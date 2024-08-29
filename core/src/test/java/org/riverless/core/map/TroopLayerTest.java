@@ -1,8 +1,11 @@
 package org.riverless.core.map;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.riverless.core.GameContext;
 import org.riverless.core.actions.MoveAction;
 import org.riverless.core.troops.Troop;
+import org.riverless.core.troops.abilities.MoveAbility;
 
 import java.util.Optional;
 
@@ -10,11 +13,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class TroopLayerTest {
 
+    private Troop troop;
+    private GameContext ctx;
+    private GameMap map;
+
+    @BeforeEach
+    void setup() {
+        troop = new Troop();
+        troop.addAbility(new MoveAbility());
+        ctx = new GameContext();
+        map = new GameMap(10, 10);
+        ctx.registerResource(map);
+    }
+
     @Test
     void shouldComputeAllowedActions() {
-        var layer = new TroopLayer(10, 10);
-        var troop = new Troop();
+        var layer = map.troopLayer();
         layer.addTroop(troop, new Position(5, 5));
+        layer.updateTroopActions(ctx);
 
         assertThat(troop.allowedActions()).containsExactlyInAnyOrder(
                 new MoveAction(troop, Direction.UP),
@@ -26,16 +42,17 @@ class TroopLayerTest {
 
     @Test
     void shouldRestrictActionsIfTroopIsNextToOtherTroop() {
-        var layer = new TroopLayer(10, 10);
-        var troop1 = new Troop();
+        var layer = map.troopLayer();
         var troop2 = new Troop();
-        layer.addTroop(troop1, new Position(5, 5));
+        troop2.addAbility(new MoveAbility());
+        layer.addTroop(troop, new Position(5, 5));
         layer.addTroop(troop2, new Position(5, 6));
+        layer.updateTroopActions(ctx);
 
-        assertThat(troop1.allowedActions()).containsExactlyInAnyOrder(
-                new MoveAction(troop1, Direction.LEFT),
-                new MoveAction(troop1, Direction.RIGHT),
-                new MoveAction(troop1, Direction.UP)
+        assertThat(troop.allowedActions()).containsExactlyInAnyOrder(
+                new MoveAction(troop, Direction.LEFT),
+                new MoveAction(troop, Direction.RIGHT),
+                new MoveAction(troop, Direction.UP)
         );
 
         assertThat(troop2.allowedActions()).containsExactlyInAnyOrder(
@@ -47,9 +64,9 @@ class TroopLayerTest {
 
     @Test
     void shouldNotListMoveActionsWhenTroopIsOnAnEdgeOfTheMap() {
-        var layer = new TroopLayer(10, 10);
-        var troop = new Troop();
+        var layer = map.troopLayer();
         layer.addTroop(troop, new Position(0, 0));
+        layer.updateTroopActions(ctx);
 
         assertThat(troop.allowedActions()).containsExactlyInAnyOrder(
                 new MoveAction(troop, Direction.DOWN),
@@ -59,8 +76,7 @@ class TroopLayerTest {
 
     @Test
     void shouldFindTroopPositionByInstance() {
-        var layer = new TroopLayer(10, 10);
-        var troop = new Troop();
+        var layer = map.troopLayer();
         layer.addTroop(troop, new Position(5, 5));
 
         Optional<Position> position = layer.troopPosition(troop);

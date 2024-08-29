@@ -7,11 +7,9 @@
 package org.riverless.core.troops;
 
 import org.jetbrains.annotations.TestOnly;
-import org.riverless.core.troops.abilities.Ability;
 import org.riverless.core.actions.Action;
-import org.riverless.core.actions.MoveAction;
-import org.riverless.core.map.Direction;
 import org.riverless.core.player.Team;
+import org.riverless.core.troops.abilities.Ability;
 import org.riverless.core.troops.stats.Stats;
 
 import java.util.ArrayList;
@@ -32,14 +30,10 @@ public class Troop {
     }
 
     public Troop(Team team, int maxHealth) {
-        this.stats = new Stats(maxHealth);
+        this.stats = new Stats(maxHealth, true);
         this.team = team;
         this.allowedActions = new HashSet<>();
         this.abilities = new ArrayList<>();
-    }
-
-    public void grantMoveActionFromDirection(Direction direction) {
-        grantAction(new MoveAction(this, direction));
     }
 
     public Set<Action> allowedActions() {
@@ -50,16 +44,12 @@ public class Troop {
         allowedActions.add(action);
     }
 
-    public void revokeAction(Action action) {
-        allowedActions.remove(action);
-    }
-
     public int health() {
         return stats.health();
     }
 
     public boolean isMoveable() {
-        return stats.isMoveable();
+        return stats.isMovable();
     }
 
     public int damage() {
@@ -76,5 +66,9 @@ public class Troop {
 
     public List<Ability> abilities() {
         return abilities;
+    }
+
+    public void addAbility(Ability ability) {
+        abilities.add(ability);
     }
 }

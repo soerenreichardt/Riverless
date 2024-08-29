@@ -36,10 +36,10 @@ public class TroopLayer {
     }
 
     public Optional<Position> troopPosition(Troop troop) {
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
-                if (troopPositions[row][col] == troop) {
-                    return Optional.of(new Position(row, col));
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (troopPositions[y][x] == troop) {
+                    return Optional.of(new Position(x, y));
                 }
             }
         }

@@ -5,6 +5,7 @@ import org.riverless.core.actions.Action;
 import org.riverless.core.actions.MoveAction;
 import org.riverless.core.map.Direction;
 import org.riverless.core.map.GameMap;
+import org.riverless.core.map.Position;
 import org.riverless.core.troops.Troop;
 
 import java.util.ArrayList;
@@ -21,7 +22,9 @@ public record MoveAbility() implements Ability {
         var troopLayer = ctx.getResource(GameMap.class).troopLayer();
         troopLayer.troopPosition(troop).ifPresent(position -> {
             for (Direction adjacentDirection : troopLayer.calculatePossibleAdjacentDirections(position)) {
-               actions.add(new MoveAction(troop, adjacentDirection));
+                if (troopLayer.positionIsEmpty(Position.adjacent(position, adjacentDirection))) {
+                    actions.add(new MoveAction(troop, adjacentDirection));
+                }
             }
         });
         return actions;

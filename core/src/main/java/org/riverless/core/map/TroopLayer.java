@@ -61,9 +61,7 @@ public class TroopLayer {
             for (int x = 0; x < width; x++) {
                 var troop = troopAtPosition(new Position(x, y));
                 if (troop != null) {
-                    troop.allowedActions().clear();
-                    var actions = troop.abilities().stream().flatMap(ability -> ability.computePossibleActions(troop, ctx).stream()).toList();
-                    troop.allowedActions().addAll(actions);
+                    troop.updatePossibleActions(ctx);
                 }
             }
         }

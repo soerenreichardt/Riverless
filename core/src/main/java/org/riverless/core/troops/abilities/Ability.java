@@ -7,5 +7,6 @@ import org.riverless.core.troops.Troop;
 import java.util.List;
 
 public interface Ability {
+    AbilityType type();
     List<Action> computePossibleActions(Troop troop, GameContext ctx);
 }

@@ -14,6 +14,11 @@ import java.util.List;
 public record MoveAbility() implements Ability {
 
     @Override
+    public AbilityType type() {
+        return AbilityType.MOVE;
+    }
+
+    @Override
     public List<Action> computePossibleActions(Troop troop, GameContext ctx) {
         if(!troop.isMoveable()) {
             return List.of();

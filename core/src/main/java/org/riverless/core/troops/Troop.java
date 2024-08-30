@@ -64,7 +64,7 @@ public class Troop extends GameObject {
     }
 
     public void receiveDamage(float damage) {
-        stats.setHealth(stats.health()-damage);
+        stats.setHealth(stats.health() - damage);
     }
 
     public void heal(float healAmount) {

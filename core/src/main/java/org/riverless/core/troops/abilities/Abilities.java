@@ -21,6 +21,6 @@ public class Abilities {
 
     public Stream<Action> computePossibleActions(Troop troop, GameContext ctx) {
         return abilities.values().stream()
-            .flatMap(ability -> ability.computePossibleActions(troop, ctx).stream());
+                .flatMap(ability -> ability.computePossibleActions(troop, ctx).stream());
     }
 }

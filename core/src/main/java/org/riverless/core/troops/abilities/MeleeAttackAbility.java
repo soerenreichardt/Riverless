@@ -26,7 +26,7 @@ public record MeleeAttackAbility() implements Ability {
             for (Direction adjacentDirection : troopLayer.calculatePossibleAdjacentDirections(position)) {
                 var adjacentPosition = Position.adjacent(position, adjacentDirection);
                 var adjacentTroop = troopLayer.troopAtPosition(adjacentPosition);
-                if(adjacentTroop != null) {
+                if (adjacentTroop != null) {
                     actions.add(new MeleeAttackAction(troop, adjacentTroop));
                 }
             }

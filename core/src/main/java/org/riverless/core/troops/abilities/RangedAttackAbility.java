@@ -22,14 +22,14 @@ public record RangedAttackAbility(int range) implements Ability {
         List<Action> actions = new ArrayList<>();
         var troopLayer = ctx.getResource(GameMap.class).troopLayer();
         troopLayer.troopPosition(troop).ifPresent(position -> {
-            for(int i=-range; i<=range; i++) {
-                for(int j=-range; j<=range; j++) {
-                    if(i == 0 && j == 0) {
+            for (int i = -range; i <= range; i++) {
+                for (int j = -range; j <= range; j++) {
+                    if (i == 0 && j == 0) {
                         continue;
                     }
                     var adjacentPosition = new Position(position.x() + i, position.y() + j);
                     var adjacentTroop = troopLayer.troopAtPosition(adjacentPosition);
-                    if(adjacentTroop != null) {
+                    if (adjacentTroop != null) {
                         actions.add(new RangeAttackAction(troop, adjacentTroop));
                     }
                 }

@@ -9,6 +9,7 @@ public class CurseEffect extends DurationEffect{
     public CurseEffect(int duration, int damage) {
         super(duration);
         this.damage = damage;
+        this.type = EffectType.CURSE;
     }
 
     @Override

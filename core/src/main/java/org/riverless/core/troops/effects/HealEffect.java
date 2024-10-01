@@ -9,11 +9,12 @@ private int healAmount;
     public HealEffect(int duration, int healAmount) {
         super(duration);
         this.healAmount = healAmount;
+        this.type = EffectType.HEAL;
     }
 
     @Override
     public void whenUpdating(Troop troop,int delta, GameContext ctx) {
-        troop.heal(healAmount);
+        troop.heal(healAmount * delta / 1000);
     }
 
     @Override

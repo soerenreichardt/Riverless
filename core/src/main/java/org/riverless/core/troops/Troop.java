@@ -13,6 +13,7 @@ import org.riverless.core.player.Team;
 import org.riverless.core.troops.abilities.Abilities;
 import org.riverless.core.troops.abilities.Ability;
 import org.riverless.core.troops.effects.Effect;
+import org.riverless.core.troops.effects.Effects;
 import org.riverless.core.troops.stats.Stats;
 
 import java.util.HashSet;
@@ -25,7 +26,7 @@ public class Troop {
     private final Abilities abilities;
     private final Stats stats;
 
-    private final Set<Effect> effects;
+    private final Effects effects;
 
     @TestOnly
     public Troop() {
@@ -37,7 +38,7 @@ public class Troop {
         this.team = team;
         this.allowedActions = new HashSet<>();
         this.abilities = new Abilities();
-        this.effects = new HashSet<>();
+        this.effects = new Effects();
     }
 
     public Set<Action> allowedActions() {

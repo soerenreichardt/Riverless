@@ -5,16 +5,16 @@ import org.riverless.core.troops.Troop;
 
 public abstract class Effect {
 
+    public EffectType type;
     private long startTime;
     public void apply(Troop troop, GameContext ctx){
-        troop.addEffect(this);
         whenStarting(troop,ctx);
         startTime = System.currentTimeMillis();
     }
 
     public void remove(Troop troop, GameContext ctx){
         whenEnding(troop,ctx);
-        troop.removeEffect(this);
+        troop.removeEffect(this); //TODO: use this here?
     }
 
     public abstract void whenStarting(Troop troop, GameContext ctx);
@@ -26,6 +26,10 @@ public abstract class Effect {
 
     public long getStartTime() {
         return startTime;
+    }
+
+    public EffectType type(){
+        return type;
     }
 
 

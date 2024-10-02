@@ -15,8 +15,12 @@ public class Abilities {
         this.abilities = new EnumMap<>(AbilityType.class);
     }
 
-    public void addAbility(Ability ability) {
+    public void add(Ability ability) {
         abilities.put(ability.type(), ability);
+    }
+
+    public <T extends Ability> T get(AbilityType type) {
+        return (T) abilities.get(type);
     }
 
     public Stream<Action> computePossibleActions(Troop troop, GameContext ctx) {

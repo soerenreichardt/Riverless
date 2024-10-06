@@ -1,7 +1,6 @@
 package org.riverless.core.troops.effects;
 
 
-
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -15,10 +14,14 @@ public class Effects {
     }
 
     public void add(Effect effect) {
-        effects.put(effect.type(), effect);
+        effects.put(effect.getEffectType(), effect);
     }
 
-    public void remove(Effect effect) {
-        effects.remove(effect.type());
+    public void remove(EffectType type) {
+       effects.remove(type);
+    }
+
+    public Effect get(EffectType type) {
+        return effects.get(type);
     }
 }

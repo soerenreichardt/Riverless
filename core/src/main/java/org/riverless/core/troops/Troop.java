@@ -8,18 +8,20 @@ package org.riverless.core.troops;
 
 import org.jetbrains.annotations.TestOnly;
 import org.riverless.core.GameContext;
+import org.riverless.core.GameObject;
 import org.riverless.core.actions.Action;
 import org.riverless.core.player.Team;
 import org.riverless.core.troops.abilities.Abilities;
 import org.riverless.core.troops.abilities.Ability;
 import org.riverless.core.troops.effects.Effect;
+import org.riverless.core.troops.effects.EffectType;
 import org.riverless.core.troops.effects.Effects;
 import org.riverless.core.troops.stats.Stats;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Troop {
+public class Troop extends GameObject {
 
     private final Set<Action> allowedActions;
     private final Team team;
@@ -83,11 +85,14 @@ public class Troop {
     }
 
 
-    public void removeEffect(Effect effect) {
-        effects.remove(effect);
+    public void removeEffect(EffectType type) {
+        Effect effect = effects.get(type);
+        effect.onEnd(this, context());
+        effects.remove(type);
     }
 
     public void addEffect(Effect effect) {
         effects.add(effect);
+        effect.apply(this, context());
     }
 }

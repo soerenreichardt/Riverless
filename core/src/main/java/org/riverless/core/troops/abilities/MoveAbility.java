@@ -20,7 +20,7 @@ public record MoveAbility() implements Ability {
 
     @Override
     public List<Action> computePossibleActions(Troop troop, GameContext ctx) {
-        if(!troop.isMoveable()) {
+        if (!troop.isMoveable()) {
             return List.of();
         }
         List<Action> actions = new ArrayList<>();

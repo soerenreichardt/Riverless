@@ -7,6 +7,8 @@ public record RangeAttackAction(Troop attacker, Troop defender) implements Actio
 
     @Override
     public void execute(GameContext ctx) {
-
+        if (attacker.allowedActions().contains(this)) {
+            defender.receiveDamage(attacker.damage());
+        }
     }
 }

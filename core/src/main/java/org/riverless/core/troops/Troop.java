@@ -16,6 +16,7 @@ import org.riverless.core.troops.abilities.Ability;
 import org.riverless.core.troops.effects.Effect;
 import org.riverless.core.troops.effects.EffectType;
 import org.riverless.core.troops.effects.Effects;
+import org.riverless.core.troops.abilities.AbilityType;
 import org.riverless.core.troops.stats.Stats;
 
 import java.util.HashSet;
@@ -64,7 +65,7 @@ public class Troop extends GameObject {
     }
 
     public void receiveDamage(float damage) {
-        stats.setHealth(stats.health()-damage);
+        stats.setHealth(stats.health() - damage);
     }
 
     public void heal(float healAmount) {
@@ -81,9 +82,12 @@ public class Troop extends GameObject {
     }
 
     public void addAbility(Ability ability) {
-        abilities.addAbility(ability);
+        abilities.add(ability);
     }
 
+    public Ability getAbility(AbilityType type) {
+        return abilities.get(type);
+    }
 
     //@Override
 

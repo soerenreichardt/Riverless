@@ -5,7 +5,7 @@ import org.riverless.core.troops.Troop;
 
 public abstract class EffectWithDuration extends AbstractEffect {
 
-    private int remainingDuration;  // Duration in milliseconds
+    private int remainingDuration;
 
     public EffectWithDuration(EffectType type,int duration) {
         super(type);
@@ -16,10 +16,7 @@ public abstract class EffectWithDuration extends AbstractEffect {
     public final boolean update(Troop troop, int deltaTime, GameContext ctx) {
         onUpdate(troop, deltaTime, ctx);
         remainingDuration -= deltaTime;
-        if (remainingDuration <= 0) {
-            return false;
-        }
-        return true;
+        return remainingDuration > 0;
     }
 
     protected abstract void onUpdate(Troop troop, int deltaTime, GameContext ctx);

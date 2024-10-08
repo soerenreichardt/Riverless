@@ -7,7 +7,8 @@ import org.riverless.core.troops.effects.EffectWithDuration;
 
 public class CurseEffect extends EffectWithDuration {
 
-    private int damage;
+    private final int damage;
+
     public CurseEffect(int duration, int damage) {
         super(EffectType.CURSE,duration);
         this.damage = damage;

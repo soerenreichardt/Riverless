@@ -12,9 +12,10 @@ import org.riverless.core.troops.effects.effects.HealEffect;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.riverless.core.troops.Troop.TEST_HEALTH;
 
 class TroopLayerTest {
+
+    public static final int TEST_HEALTH = 100;
 
     private Troop troop;
     private GameContext ctx;
@@ -22,7 +23,7 @@ class TroopLayerTest {
 
     @BeforeEach
     void setup() {
-        troop = new Troop();
+        troop = new Troop(TEST_HEALTH);
         troop.addAbility(new MoveAbility());
         ctx = new GameContext();
         map = new GameMap(10, 10);
@@ -46,7 +47,7 @@ class TroopLayerTest {
     @Test
     void shouldRestrictActionsIfTroopIsNextToOtherTroop() {
         var layer = map.troopLayer();
-        var troop2 = new Troop();
+        var troop2 = new Troop(TEST_HEALTH);
         troop2.addAbility(new MoveAbility());
         layer.addTroop(troop, new Position(5, 5));
         layer.addTroop(troop2, new Position(5, 6));

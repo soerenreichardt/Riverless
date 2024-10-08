@@ -23,7 +23,6 @@ import java.util.Set;
 
 public class Troop extends GameObject {
 
-    public static final int TEST_HEALTH = 100;
     private final Set<Action> allowedActions;
     private final Team team;
     private final Abilities abilities;
@@ -32,8 +31,8 @@ public class Troop extends GameObject {
     private final Effects effects;
 
     @TestOnly
-    public Troop() {
-        this(new Team("Test"), TEST_HEALTH);
+    public Troop(int health) {
+        this(new Team("Test"), health);
     }
 
     public Troop(Team team, int maxHealth) {

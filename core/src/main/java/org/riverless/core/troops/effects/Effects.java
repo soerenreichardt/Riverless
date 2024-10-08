@@ -7,8 +7,6 @@ import org.riverless.core.troops.Troop;
 import java.util.EnumMap;
 import java.util.Map;
 
-
-
 public class Effects {
     private final Map<EffectType, Effect> effects;
 

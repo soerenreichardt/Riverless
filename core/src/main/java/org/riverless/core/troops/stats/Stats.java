@@ -4,10 +4,10 @@ package org.riverless.core.troops.stats;
 
 public class Stats {
 
-    private final int maxHealth;
+    private final float maxHealth;
 
-    private int health;
-    private int damage;
+    private float health;
+    private float damage;
 
     private boolean movable;
 
@@ -17,15 +17,15 @@ public class Stats {
         this.movable = movable;
     }
 
-    public int health() {
+    public float health() {
         return health;
     }
 
-    public int damage() {
+    public float damage() {
         return damage;
     }
 
-    public int maxHealth() {
+    public float maxHealth() {
         return maxHealth;
     }
 
@@ -33,11 +33,11 @@ public class Stats {
         return movable;
     }
 
-    public void setHealth(int health) {
+    public void setHealth(float health) {
         this.health = health;
     }
 
-    public void setDamage(int damage) {
+    public void setDamage(float damage) {
         this.damage = damage;
     }
 

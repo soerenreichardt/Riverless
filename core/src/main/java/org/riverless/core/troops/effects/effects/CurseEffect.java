@@ -9,14 +9,14 @@ public class CurseEffect extends EffectWithDuration {
 
     private int damage;
     public CurseEffect(int duration, int damage) {
-        super(duration);
+        super(EffectType.CURSE,duration);
         this.damage = damage;
-        this.effectType = EffectType.CURSE;
     }
+
 
     @Override
     protected void onStart(Troop troop, GameContext ctx) {
-        // do nothing
+
     }
 
     @Override

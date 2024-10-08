@@ -8,18 +8,18 @@ public abstract class AbstractEffect implements Effect {
     protected EffectType effectType; // Common effect type
     private long startTime;
 
+
+    public AbstractEffect(EffectType effectType) {
+        this.effectType = effectType;
+    }
     public final void apply(Troop troop, GameContext ctx) {
         startTime = System.currentTimeMillis();
         onStart(troop, ctx);
     }
 
-    public final void remove(Troop troop, GameContext ctx) {
-        onEnd(troop, ctx);
-    }
-
     protected abstract void onStart(Troop troop, GameContext ctx);
 
-    public abstract void update(Troop troop, int deltaTime, GameContext ctx);
+    public abstract boolean update(Troop troop, int deltaTime, GameContext ctx);
 
     public long getStartTime() {
         return startTime;
@@ -28,4 +28,6 @@ public abstract class AbstractEffect implements Effect {
     public EffectType getEffectType() {
         return effectType;
     }
+
+
 }

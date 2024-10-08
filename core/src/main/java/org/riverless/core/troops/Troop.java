@@ -23,6 +23,7 @@ import java.util.Set;
 
 public class Troop extends GameObject {
 
+    public static final int TEST_HEALTH = 100;
     private final Set<Action> allowedActions;
     private final Team team;
     private final Abilities abilities;
@@ -32,7 +33,7 @@ public class Troop extends GameObject {
 
     @TestOnly
     public Troop() {
-        this(new Team("Test"), 100);
+        this(new Team("Test"), TEST_HEALTH);
     }
 
     public Troop(Team team, int maxHealth) {
@@ -51,7 +52,7 @@ public class Troop extends GameObject {
         allowedActions.add(action);
     }
 
-    public int health() {
+    public float health() {
         return stats.health();
     }
 
@@ -59,15 +60,15 @@ public class Troop extends GameObject {
         return stats.isMovable();
     }
 
-    public int damage() {
+    public float damage() {
         return stats.damage();
     }
 
-    public void receiveDamage(int damage) {
+    public void receiveDamage(float damage) {
         stats.setHealth(stats.health()-damage);
     }
 
-    public void heal(int healAmount) {
+    public void heal(float healAmount) {
         stats.setHealth(stats.health()+healAmount);
     }
 
@@ -85,14 +86,25 @@ public class Troop extends GameObject {
     }
 
 
+    //@Override
+
+    public void addEffect(Effect effect) {
+        effects.add(effect);
+        effect.apply(this, context());
+    }
+    public void update(int deltaTime) {
+        effects.update(deltaTime, this, context());
+    }
+
     public void removeEffect(EffectType type) {
         Effect effect = effects.get(type);
         effect.onEnd(this, context());
         effects.remove(type);
     }
 
-    public void addEffect(Effect effect) {
-        effects.add(effect);
-        effect.apply(this, context());
+    public Effects effects() {
+        return effects;
     }
+
+
 }

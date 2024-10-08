@@ -6,10 +6,13 @@ import org.riverless.core.GameContext;
 import org.riverless.core.actions.MoveAction;
 import org.riverless.core.troops.Troop;
 import org.riverless.core.troops.abilities.MoveAbility;
+import org.riverless.core.troops.effects.effects.CurseEffect;
+import org.riverless.core.troops.effects.effects.HealEffect;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.riverless.core.troops.Troop.TEST_HEALTH;
 
 class TroopLayerTest {
 
@@ -82,5 +85,33 @@ class TroopLayerTest {
         Optional<Position> position = layer.troopPosition(troop);
         assertThat(position).isPresent();
         assertThat(position.get()).isEqualTo(new Position(5, 5));
+    }
+
+    @Test
+    void shouldApplyEffectsToTroops() {
+        var layer = map.troopLayer();
+        layer.addTroop(troop, new Position(5, 5));
+        var effect = new CurseEffect(100, 10);
+        assertThat(troop.effects().size()).isEqualTo(0);
+        troop.addEffect(effect);
+        assertThat(troop.effects().size()).isEqualTo(1);
+        troop.update(50);
+        assertThat(troop.effects().size()).isEqualTo(1);
+        assertThat(troop.health()).isEqualTo(TEST_HEALTH);
+        troop.update(60);
+        assertThat(troop.effects().size()).isEqualTo(0);
+        assertThat(troop.health()).isEqualTo(TEST_HEALTH - 10);
+
+        var effect2 = new HealEffect(1000,10);
+        assertThat(troop.effects().size()).isEqualTo(0);
+        troop.addEffect(effect2);
+        assertThat(troop.effects().size()).isEqualTo(1);
+        troop.update(500);
+        assertThat(troop.effects().size()).isEqualTo(1);
+        assertThat(troop.health()).isGreaterThan(TEST_HEALTH-10);
+        troop.update(501);
+        assertThat(troop.effects().size()).isEqualTo(0);
+        assertThat(troop.health()).isGreaterThan(TEST_HEALTH-2);
+
     }
 }

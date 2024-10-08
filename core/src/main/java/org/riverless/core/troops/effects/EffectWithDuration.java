@@ -7,17 +7,19 @@ public abstract class EffectWithDuration extends AbstractEffect {
 
     private int remainingDuration;  // Duration in milliseconds
 
-    public EffectWithDuration(int duration) {
+    public EffectWithDuration(EffectType type,int duration) {
+        super(type);
         this.remainingDuration = duration;
     }
 
     @Override
-    public final void update(Troop troop, int deltaTime, GameContext ctx) {
+    public final boolean update(Troop troop, int deltaTime, GameContext ctx) {
         onUpdate(troop, deltaTime, ctx);
         remainingDuration -= deltaTime;
         if (remainingDuration <= 0) {
-            remove(troop, ctx);
+            return false;
         }
+        return true;
     }
 
     protected abstract void onUpdate(Troop troop, int deltaTime, GameContext ctx);

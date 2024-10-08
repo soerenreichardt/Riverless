@@ -10,20 +10,19 @@ public class HealEffect extends EffectWithDuration {
     private final int healAmount;
 
     public HealEffect(int duration, int healAmount) {
-        super(duration);
+        super(EffectType.HEAL,duration);
         this.healAmount = healAmount;
-        this.effectType = EffectType.HEAL;
+    }
+
+    @Override
+    protected void onStart(Troop troop, GameContext ctx) {
+        // do nothing
     }
 
     @Override
     protected void onUpdate(Troop troop, int deltaTime, GameContext ctx) {
         int heal = healAmount * deltaTime / 1000;
         troop.heal(heal);
-    }
-
-    @Override
-    protected void onStart(Troop troop, GameContext ctx) {
-       // do nothing
     }
 
     @Override

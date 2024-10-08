@@ -1,6 +1,9 @@
 package org.riverless.core.troops.effects;
 
 
+import org.riverless.core.GameContext;
+import org.riverless.core.troops.Troop;
+
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -23,5 +26,18 @@ public class Effects {
 
     public Effect get(EffectType type) {
         return effects.get(type);
+    }
+
+    public void update(int deltaTime, Troop troop, GameContext ctx) {
+        effects.values().forEach(effect -> {
+            if(!effect.update(troop, deltaTime, ctx)){
+                effect.onEnd(troop, ctx);
+                remove(effect.getEffectType());
+            }
+        });
+    }
+
+    public int size() {
+        return effects.size();
     }
 }

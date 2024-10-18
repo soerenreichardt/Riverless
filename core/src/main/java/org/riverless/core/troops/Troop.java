@@ -18,6 +18,8 @@ import org.riverless.core.troops.effects.EffectType;
 import org.riverless.core.troops.effects.Effects;
 import org.riverless.core.troops.abilities.AbilityType;
 import org.riverless.core.troops.stats.Stats;
+import org.riverless.core.troops.units.Party;
+import org.riverless.core.troops.units.Unit;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,20 +30,24 @@ public class Troop extends GameObject {
     private final Team team;
     private final Abilities abilities;
     private final Stats stats;
-
     private final Effects effects;
+
+    private Party party = new Party();
+
+    private int gold;
 
     @TestOnly
     public Troop(int health) {
-        this(new Team("Test"), health);
+        this(new Team("Test"), health, 100);
     }
 
-    public Troop(Team team, int maxHealth) {
+    public Troop(Team team, int maxHealth, int gold) {
         this.stats = new Stats(maxHealth, true);
         this.team = team;
         this.allowedActions = new HashSet<>();
         this.abilities = new Abilities();
         this.effects = new Effects();
+        this.gold = gold;
     }
 
     public Set<Action> allowedActions() {
@@ -89,7 +95,7 @@ public class Troop extends GameObject {
         return abilities.get(type);
     }
 
-    //@Override
+
 
     public void addEffect(Effect effect) {
         effects.add(effect);
@@ -109,5 +115,15 @@ public class Troop extends GameObject {
         return effects;
     }
 
+    public void buyUnit(Unit unit) {
+        if (gold >= unit.cost()) {
+            party.addUnit(unit);
+            gold -= unit.cost();
 
+        }
+    }
+
+    public Party party() {
+        return party;
+    }
 }

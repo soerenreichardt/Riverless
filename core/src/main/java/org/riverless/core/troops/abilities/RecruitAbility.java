@@ -2,14 +2,10 @@ package org.riverless.core.troops.abilities;
 
 import org.riverless.core.GameContext;
 import org.riverless.core.actions.Action;
-import org.riverless.core.actions.MoveAction;
-import org.riverless.core.actions.RecruitActionParam;
-import org.riverless.core.actions.RecuitAction;
-import org.riverless.core.map.Direction;
+import org.riverless.core.actions.RecruitAction;
 import org.riverless.core.map.GameMap;
 import org.riverless.core.map.Position;
 import org.riverless.core.troops.Troop;
-import org.riverless.core.troops.units.UnitType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +23,7 @@ public record RecruitAbility() implements Ability {
         List<Action> actions = new ArrayList<>();
         //TODO: Implement the logic to compute the possible recruit actions
         //
-        actions.add(new RecuitAction(troop, new RecruitActionParam()));
+        actions.add(new RecruitAction(troop));
 
 
         return actions;

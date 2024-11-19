@@ -82,15 +82,6 @@ class TroopLayerTest {
         );
     }
 
-    @Test
-    void shouldFindTroopPositionByInstance() {
-        var layer = map.troopLayer();
-        layer.addTroop(troop, new Position(5, 5));
-
-        Optional<Position> position = layer.troopPosition(troop);
-        assertThat(position).isPresent();
-        assertThat(position.get()).isEqualTo(new Position(5, 5));
-    }
 
     @Test
     void shouldApplyEffectsToTroops() {

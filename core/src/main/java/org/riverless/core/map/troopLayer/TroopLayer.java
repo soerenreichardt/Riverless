@@ -4,11 +4,13 @@
  * This file contains proprietary code that is only available via a commercial license from Neo4j.
  * For more information, see https://neo4j.com/contact-us/
  */
-package org.riverless.core.map;
+package org.riverless.core.map.troopLayer;
 
 import org.riverless.core.GameContext;
 import org.riverless.core.actions.MeleeAttackAction;
 import org.riverless.core.actions.MoveAction;
+import org.riverless.core.map.Direction;
+import org.riverless.core.map.Position;
 import org.riverless.core.troops.Troop;
 
 import java.util.ArrayList;
@@ -17,43 +19,33 @@ import java.util.Optional;
 
 public class TroopLayer {
 
-    private final Troop[][] troopPositions;
+
+    private final TroopPositions troopPositions;
     private final int width;
     private final int height;
 
     public TroopLayer(int width, int height) {
         this.width = width;
         this.height = height;
-        this.troopPositions = new Troop[height][width];
+        this.troopPositions = new TroopPositions(height,width);
     }
 
     public boolean addTroop(Troop troop, Position position) {
         if (!positionIsEmpty(position)) {
             return false;
         }
-        troopPositions[position.y()][position.x()] = troop;
+        troopPositions.setTroopPosition(troop,position);
+
         return true;
     }
 
-    public Optional<Position> troopPosition(Troop troop) {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (troopPositions[y][x] == troop) {
-                    return Optional.of(new Position(x, y));
-                }
-            }
-        }
-        return Optional.empty();
+    public void moveTroop(Troop troop, Direction direction) {
+        Position newPos = troop.position().move(direction,1);
+        troopPositions.setTroopPosition(troop,newPos);
     }
 
-    public void moveTroop(Troop troop, Direction direction) {
-        troopPosition(troop).ifPresent(position -> {
-            if (positionIsEmpty(Position.adjacent(position, direction))) {
-                troopPositions[position.y()][position.x()] = null;
-                position.move(direction, 1);
-                troopPositions[position.y()][position.x()] = troop;
-            }
-        });
+    public void setTroopPosition(Position position, Troop troop) {
+        troopPositions.setTroopPosition(troop,position);
     }
 
     public void updateTroopActions(GameContext ctx) {
@@ -72,11 +64,11 @@ public class TroopLayer {
     }
 
     private boolean positionIsEmpty(int x, int y) {
-        return troopPositions[y][x] == null;
+        return troopPositions.positionIsEmpty(new Position(x, y));
     }
 
     public Troop troopAtPosition(Position position) {
-        return troopPositions[position.y()][position.x()];
+        return troopPositions.troopAt(position);
     }
 
     public List<Direction> calculatePossibleAdjacentDirections(Position position) {

@@ -10,6 +10,7 @@ import org.jetbrains.annotations.TestOnly;
 import org.riverless.core.GameContext;
 import org.riverless.core.GameObject;
 import org.riverless.core.actions.Action;
+import org.riverless.core.map.Position;
 import org.riverless.core.player.Team;
 import org.riverless.core.troops.abilities.Abilities;
 import org.riverless.core.troops.abilities.Ability;
@@ -32,22 +33,25 @@ public class Troop extends GameObject {
     private final Stats stats;
     private final Effects effects;
 
+    private final Position position;
+
     private Party party = new Party();
 
     private int gold;
 
     @TestOnly
     public Troop(int health) {
-        this(new Team("Test"), health, 100);
+        this(new Team("Test"), health, 100,new Position(2, 2));
     }
 
-    public Troop(Team team, int maxHealth, int gold) {
+    public Troop(Team team, int maxHealth, int gold, Position position) {
         this.stats = new Stats(maxHealth, true);
         this.team = team;
         this.allowedActions = new HashSet<>();
         this.abilities = new Abilities();
         this.effects = new Effects();
         this.gold = gold;
+        this.position = position;
     }
 
     public Set<Action> allowedActions() {
@@ -125,5 +129,13 @@ public class Troop extends GameObject {
 
     public Party party() {
         return party;
+    }
+
+    public void setPosition(Position position) {
+        this.position.set(position);
+    }
+
+    public Position position() {
+        return position;
     }
 }

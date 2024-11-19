@@ -22,15 +22,13 @@ public record MeleeAttackAbility() implements Ability {
     public List<Action> computePossibleActions(Troop troop, GameContext ctx) {
         List<Action> actions = new ArrayList<>();
         var troopLayer = ctx.getResource(GameMap.class).troopLayer();
-        troopLayer.troopPosition(troop).ifPresent(position -> {
-            for (Direction adjacentDirection : troopLayer.calculatePossibleAdjacentDirections(position)) {
-                var adjacentPosition = Position.adjacent(position, adjacentDirection);
+            for (Direction adjacentDirection : troopLayer.calculatePossibleAdjacentDirections(troop.position())) {
+                var adjacentPosition = Position.adjacent(troop.position(), adjacentDirection);
                 var adjacentTroop = troopLayer.troopAtPosition(adjacentPosition);
                 if (adjacentTroop != null) {
                     actions.add(new MeleeAttackAction(troop, adjacentTroop));
                 }
             }
-        });
         return actions;
     }
 }

@@ -23,13 +23,10 @@ public record RecruitAbility() implements Ability {
 
     @Override
     public List<Action> computePossibleActions(Troop troop, GameContext ctx) {
-        Position position = ctx.getResource(GameMap.class).troopLayer().troopPosition(troop).orElseThrow();
-        List<Action> actions = new ArrayList<>();
+        Position position = troop.position();
         //TODO: Implement the logic to compute the possible recruit actions
         //
-        actions.add(new RecuitAction(troop, new RecruitActionParam()));
-
-
-        return actions;
+        var recuitAction = new RecuitAction(troop, new RecruitActionParam());
+        return List.of(recuitAction);
     }
 }

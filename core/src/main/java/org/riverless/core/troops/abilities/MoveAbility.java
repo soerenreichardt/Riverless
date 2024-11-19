@@ -25,13 +25,11 @@ public record MoveAbility() implements Ability {
         }
         List<Action> actions = new ArrayList<>();
         var troopLayer = ctx.getResource(GameMap.class).troopLayer();
-        troopLayer.troopPosition(troop).ifPresent(position -> {
-            for (Direction adjacentDirection : troopLayer.calculatePossibleAdjacentDirections(position)) {
-                if (troopLayer.positionIsEmpty(Position.adjacent(position, adjacentDirection))) {
+            for (Direction adjacentDirection : troopLayer.calculatePossibleAdjacentDirections(troop.position())) {
+                if (troopLayer.positionIsEmpty(Position.adjacent(troop.position(), adjacentDirection))) {
                     actions.add(new MoveAction(troop, adjacentDirection));
                 }
             }
-        });
         return actions;
     }
 }

@@ -17,13 +17,25 @@ public class Position {
         return y;
     }
 
-    public void move(Direction direction, int distance) {
+    public void set(Position position) {
+        set(position.x(), position.y());
+    }
+
+    public void set(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Position move(Direction direction, int distance) {
+        var x = this.x;
+        var y = this.y;
         switch (direction) {
             case UP -> y -= distance;
             case DOWN -> y += distance;
             case LEFT -> x -= distance;
             case RIGHT -> x += distance;
         }
+        return new Position(x, y);
     }
 
     public static Position adjacent(Position position, Direction direction) {

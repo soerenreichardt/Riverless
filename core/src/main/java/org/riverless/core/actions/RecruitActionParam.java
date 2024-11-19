@@ -15,7 +15,6 @@ public class RecruitActionParam implements ActionParam {
         return type != null && amount > 0;
     }
 
-
     public void setType(UnitType type) {
         this.type = type;
     }

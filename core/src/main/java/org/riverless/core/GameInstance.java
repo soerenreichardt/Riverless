@@ -26,6 +26,7 @@ public class GameInstance extends Thread {
     @Override
     public void run() {
         try {
+            context.spawnObject(new GameMap(10, 10));
             var map = context.getResource(GameMap.class);
             while (true) {
                 var start = System.currentTimeMillis();

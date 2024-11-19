@@ -12,7 +12,6 @@ public class Unit {
         this.cost = 5;//TODO: change this
     }
 
-
     public UnitType type(){
         return type;
     }
@@ -22,6 +21,6 @@ public class Unit {
     }
 
     public int cost(){
-        return 0;
+        return cost;
     }
 }

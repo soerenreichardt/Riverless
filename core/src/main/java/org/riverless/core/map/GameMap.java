@@ -8,6 +8,7 @@ package org.riverless.core.map;
 
 import org.riverless.core.GameObject;
 import org.riverless.core.Resource;
+import org.riverless.core.map.troopLayer.TroopLayer;
 
 public class GameMap extends GameObject implements Resource {
 
@@ -44,5 +45,9 @@ public class GameMap extends GameObject implements Resource {
 
     public TroopLayer troopLayer() {
         return troopLayer;
+    }
+
+    public LocationLayer locationLayer() {
+        return locationLayer;
     }
 }
